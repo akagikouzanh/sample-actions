@@ -35,9 +35,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          greet=${{ steps.greeting.outputs.GREETING }}
-          here=${{ steps.here.outputs.HERE }}
-          bye=${{ steps.bye.outputs.BYE }}
+          greet="${{ steps.greeting.outputs.GREETING }}"
+          here="${{ steps.here.outputs.HERE }}"
+          bye="${{ steps.bye.outputs.BYE }}"
 
           greet_escaped=$(printf "%s\n" "$greet" | sed 's/`/\\`/g')
           here_escaped=$(printf "%s\n" "$here" | sed 's/`/\\`/g')
