@@ -1,2 +1,3 @@
 # sample-actions
-learn actions and samples
+
+GitHub Actionsのサンプルです。
