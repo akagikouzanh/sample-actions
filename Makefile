@@ -1,8 +1,8 @@
 greeting:
-	echo "Hello"
+	@echo "Hello"
 
 here:
-	echo "Here in GitHub actions"
+	@echo "Here in GitHub actions"
 
 bye:
-	echo "Bye guys"
+	@echo "Bye guys"
