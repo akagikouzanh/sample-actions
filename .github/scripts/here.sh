@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 
-output=$(make here 2>&1 || true)
+output=$(make here 2>&1)
 status=$?
 
 echo "HERE_STATUS=$status" >> "$GITHUB_OUTPUT"

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 
-output=$(make greeting 2>&1 || true)
+output=$(make greeting 2>&1)
 status=$?
 
 echo "GREETING_STATUS=$status" >> "$GITHUB_OUTPUT"

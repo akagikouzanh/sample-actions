@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 
-output=$(make bye 2>&1 || true)
+output=$(make bye 2>&1)
 status=$?
 
 echo "BYE_STATUS=$status" >> "$GITHUB_OUTPUT"
