@@ -55,6 +55,6 @@ jobs:
         if: |
           steps.greeting.outputs.GREETING_STATUS != '0' ||
           steps.here.outputs.HERE_STATUS != '0' ||
-          steps.here.outputs.FATAL_STATUS != '0' ||
+          steps.fatal.outputs.FATAL_STATUS != '0' ||
           steps.bye.outputs.BYE_STATUS != '0'
         run: exit 1
