@@ -12,70 +12,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Run Greeting
         id: greeting
         run: |
-          output=$(make greeting 2>&1 || true)
-          echo "GREETING<<EOF" >> $GITHUB_OUTPUT
-          echo "$output" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          chmod +x .github/scripts/greet.sh
+          .github/scripts/greet.sh
+
       - name: Run Here
         id: here
+        if: steps.greeting.outputs.GREETING_STATUS == '0'
         run: |
-          output=$(make here 2>&1 || true)
-          echo "HERE<<EOF" >> $GITHUB_OUTPUT
-          echo "$output" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          chmod +x .github/scripts/here.sh
+          .github/scripts/here.sh
+
       - name: Run Bye
         id: bye
+        if: steps.here.outputs.HERE_STATUS == '0'
+        # if: steps.fatal.outputs.FATAL_STATUS == '0'
         run: |
-          output=$(make bye 2>&1 || true)
-          echo "BYE<<EOF" >> $GITHUB_OUTPUT
-          echo "$output" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          chmod +x .github/scripts/bye.sh
+          .github/scripts/bye.sh
+
       - name: PR comment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GREET_OUTPUT: ${{ steps.greeting.outputs.GREETING }}
+          HERE_OUTPUT: ${{ steps.here.outputs.HERE  }}
+          BYE_OUTPUT: ${{ steps.bye.outputs.BYE }}
         run: |
-          greet="${{ steps.greeting.outputs.GREETING }}"
-          here="${{ steps.here.outputs.HERE }}"
-          bye="${{ steps.bye.outputs.BYE }}"
+          chmod +x .github/scripts/pr_comment.sh
+          .github/scripts/pr_comment.sh
 
-          greet_escaped=$(printf "%s\n" "$greet" | sed 's/`/\\`/g')
-          here_escaped=$(printf "%s\n" "$here" | sed 's/`/\\`/g')
-          bye_escaped=$(printf "%s\n" "$bye" | sed 's/`/\\`/g')
-
-          gh pr comment ${{ github.event.pull_request.number }} --body "
-          ### Greeting
-
-          <details>
-          <summary>結果を見る</summary>
-
-          \`\`\`
-          $greet_escaped
-          \`\`\`
-
-          </details>
-
-          ### Here
-
-          <details>
-          <summary>結果を見る</summary>
-
-          \`\`\`
-          $here_escaped
-          \`\`\`
-
-          </details>
-
-          ### Bye
-
-          <details>
-          <summary>結果を見る</summary>
-
-          \`\`\`
-          $bye_escaped
-          \`\`\`
-
-          </details>
-          "
+      - name: Faild
+        if: |
+          steps.greeting.outputs.GREETING_STATUS != '0' ||
+          steps.here.outputs.HERE_STATUS != '0' ||
+          steps.bye.outputs.BYE_STATUS != '0'
+        run: exit 1
