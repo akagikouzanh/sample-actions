@@ -26,13 +26,6 @@ jobs:
           chmod +x .github/scripts/here.sh
           .github/scripts/here.sh
 
-      # - name: Run Fatal
-      #   id: fatal
-      #   if: steps.here.outputs.HERE_STATUS == '0'
-      #   run: |
-      #     chmod +x .github/scripts/fatal.sh
-      #     .github/scripts/fatal.sh
-
       - name: Run Bye
         id: bye
         if: steps.here.outputs.HERE_STATUS == '0'
