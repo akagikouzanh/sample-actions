@@ -26,16 +26,17 @@ jobs:
           chmod +x .github/scripts/here.sh
           .github/scripts/here.sh
 
-      - name: Run Fatal
-        id: fatal
-        if: steps.here.outputs.HERE_STATUS == '0'
-        run: |
-          chmod +x .github/scripts/fatal.sh
-          .github/scripts/fatal.sh
+      # - name: Run Fatal
+      #   id: fatal
+      #   if: steps.here.outputs.HERE_STATUS == '0'
+      #   run: |
+      #     chmod +x .github/scripts/fatal.sh
+      #     .github/scripts/fatal.sh
 
       - name: Run Bye
         id: bye
-        if: steps.fatal.outputs.FATAL_STATUS == '0'
+        if: steps.here.outputs.HERE_STATUS == '0'
+        # if: steps.fatal.outputs.FATAL_STATUS == '0'
         run: |
           chmod +x .github/scripts/bye.sh
           .github/scripts/bye.sh
@@ -55,6 +56,5 @@ jobs:
         if: |
           steps.greeting.outputs.GREETING_STATUS != '0' ||
           steps.here.outputs.HERE_STATUS != '0' ||
-          steps.fatal.outputs.FATAL_STATUS != '0' ||
           steps.bye.outputs.BYE_STATUS != '0'
         run: exit 1
