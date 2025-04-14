@@ -18,27 +18,33 @@ body=$(cat <<EOF
 
 <details>
 <summary>結果を見る</summary>
+
 \`\`\`
 $greet
 \`\`\`
+
 </details>
 
 ### Here
 
 <details>
 <summary>結果を見る</summary>
+
 \`\`\`
 $here
 \`\`\`
+
 </details>
 
 ### Bye
 
 <details>
 <summary>結果を見る</summary>
+
 \`\`\`
 $bye
 \`\`\`
+
 </details>
 EOF
 )

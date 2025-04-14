@@ -30,8 +30,8 @@ jobs:
         id: bye
         if: steps.here.outputs.HERE_STATUS == '0'
         run: |
-          chmod +x .github/scripts/here.sh
-          .github/scripts/here.sh
+          chmod +x .github/scripts/bye.sh
+          .github/scripts/bye.sh
 
       - name: PR comment
         env:
