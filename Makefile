@@ -6,3 +6,6 @@ here:
 
 bye:
 	@echo "Bye guys"
+
+error:
+	@echo "これはエラーになります"; exit 1
